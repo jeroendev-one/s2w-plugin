@@ -14,10 +14,10 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
     /**
      * Return stock for all warehouses.
      * Returns null if product is not from a warehouse.
-     * @param string $productId
+     * @param $productId
      * @return int|null
      */
-    protected function getStockQuantityFromWarehouse(string $productId): int|null
+    protected function getStockQuantityFromWarehouse($productId): int|null
     {
         $total = 0;
 
