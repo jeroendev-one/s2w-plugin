@@ -11,39 +11,8 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 	protected $action = 's2w_process_cron_update_products';
 
 
-    /**
-     * Return stock for all warehouses.
-     * Returns null if product is not from a warehouse.
-     * @param $productId
-     * @return int|null
-     */
-    protected function getStockQuantityFromWarehouse($productId): int|null
-    {
-        $total = 0;
-
-        $jopa = get_post_meta($productId, 'wcmlim_stock_at_12676', true);
-        $winkel = get_post_meta($productId, 'wcmlim_stock_at_11450', true);
-        $jhSports = get_post_meta($productId, 'wcmlim_stock_at_11449', true);
-
-        /**
-         * Return null if all warehouses are empty
-         */
-        if (!$jopa && !$winkel && !$jhSports){
-            return null;
-        }
-
-        if (!empty($jopa)) {
-            $total += (int)$jopa;
-        }
-        if (!empty($winkel)) {
-            $total += (int) $winkel;
-        }
-
-        if (!empty($jhSports)) {
-            $total += (int)$jhSports;
-        }
-
-        return $total;
+    protected function setWinkelStock($productId, $stock) {
+        update_post_meta($productId, 'wcmlim_stock_at_11450', $stock);
     }
 
 	/**
@@ -88,9 +57,10 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 												foreach ( $variants as $variant_k => $variant_v ) {
 													vi_s2w_set_time_limit();
 													if ( $variant_v['id'] == $shopify_variation_id ) {
-														$inventory     = $this->getStockQuantityFromWarehouse($variant_v['id']) ?? $variant_v['inventory_quantity'];
+														$inventory     = $variant_v['inventory_quantity'];
 														$regular_price = $variant_v['compare_at_price'];
 														$sale_price    = $variant_v['price'];
+
 														if ( ! floatval( $regular_price ) || floatval( $regular_price ) == floatval( $sale_price ) ) {
 															$regular_price = $sale_price;
 															$sale_price    = '';
@@ -99,6 +69,7 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 														if ( $manage_stock ) {
 															$variation->set_manage_stock( 'yes' );
 															$variation->set_stock_quantity( $inventory );
+                                                            $this->setWinkelStock($variation_id, $inventory);
 															if ( $variant_v['inventory_policy'] === 'continue' ) {
 																$variation->set_backorders( 'yes' );
 															} else {
@@ -134,9 +105,11 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 									}
 									if ( $manage_stock ) {
 										$product_obj->set_manage_stock( 'yes' );
-										$inventory =   $this->getStockQuantityFromWarehouse($variants[0]['id']) ?? $variants[0]['inventory_quantity'] ;
+										$inventory =  $variants[0]['inventory_quantity'] ;
 										$product_obj->set_stock_quantity( $inventory );
-										if ( $variants[0]['inventory_policy'] === 'continue' ) {
+                                        $this->setWinkelStock($variants[0]['id'], $inventory);
+
+                                        if ( $variants[0]['inventory_policy'] === 'continue' ) {
 											$product_obj->set_backorders( 'yes' );
 										} else {
 											$product_obj->set_backorders( 'no' );
@@ -201,12 +174,13 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 												foreach ( $variants as $variant_k => $variant_v ) {
 													vi_s2w_set_time_limit();
 													if ( $variant_v['id'] == $shopify_variation_id ) {
-                                                        $inventory = $this->getStockQuantityFromWarehouse($variant_v['id']) ?? $variant_v['inventory_quantity'] ;
+                                                        $inventory = $variant_v['inventory_quantity'] ;
 														$variation = wc_get_product( $variation_id );
 														if ( $manage_stock ) {
 															$variation->set_manage_stock( 'yes' );
 															$variation->set_stock_quantity( $inventory );
-															if ( $variant_v['inventory_policy'] === 'continue' ) {
+                                                            $this->setWinkelStock($variation_id, $inventory);
+                                                            if ( $variant_v['inventory_policy'] === 'continue' ) {
 																$variation->set_backorders( 'yes' );
 															} else {
 																$variation->set_backorders( 'no' );
@@ -226,9 +200,11 @@ class WP_S2W_IMPORT_SHOPIFY_TO_WOOCOMMERCE_Process_Cron_Update_Products extends 
 								} else {
 									if ( $manage_stock ) {
 										$product_obj->set_manage_stock( 'yes' );
-                                        $inventory = $this->getStockQuantityFromWarehouse($variants[0]['id']) ?? $variants[0]['inventory_quantity'] ;
+                                        $inventory = $variants[0]['inventory_quantity'] ;
 										$product_obj->set_stock_quantity( $inventory );
-										if ( $variants[0]['inventory_policy'] === 'continue' ) {
+                                        $this->setWinkelStock($variants[0]['id'], $inventory);
+
+                                        if ( $variants[0]['inventory_policy'] === 'continue' ) {
 											$product_obj->set_backorders( 'yes' );
 										} else {
 											$product_obj->set_backorders( 'no' );
