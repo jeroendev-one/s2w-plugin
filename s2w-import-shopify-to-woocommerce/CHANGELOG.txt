@@ -1,0 +1,108 @@
+/**1.1.0 - 2021.02.18**/
+- Fixed: Imported customers not showing in WooCommerce/customers
+- Fixed: Refunded orders
+- Updated: Import categories images + description
+- Updated: Compatibility with WP5.6 and WC5.0
+- Updated: Use latest API version 2021-01
+
+/**1.0.9.6 - 2020.08.15**/
+- Fixed: Download description images
+- Added: Update tags, product date
+- Added: Support order refund items
+- Updated: Compatibility with WP5.5 and WC4.3
+
+/**1.0.9.5 - 2020.05.09**/
+- Fixed: File not exists bug when importing CSV
+- Fixed: Can not set product attributes/variations correctly when attributes is in non-latin languages
+- Updated: Compatibility with WooCommerce 4.1
+
+/**1.0.9.4 - 2020.04.25**/
+- Fixed: Webhook verify issue
+
+/**1.0.9.3 - 2020.04.21**/
+- Fixed: Cron update
+- Fixed: Download images in product description
+- Added: Options to update existing blogs
+
+/**1.0.9.2 - 2020.04.06**/
+- Fixed: Auto update function
+
+/**1.0.9.1 - 2020.04.03**/
+- Updated: Support latest Shopify API version 2020-04
+- Added: Option to download images in product description
+- Optimized: Download images in the background
+
+/**1.0.9 - 2020.03.31**/
+- Fixed: Import blogs, pages
+- Fixed: Order line item product quantity and subtotal
+- Fixed: Download duplicated images
+- Fixed: Conflict usage of accordion
+- Updated: Compatibility with WP5.4 and WC4.0
+- Updated: Support latest Shopify API version 2020-01
+- Improved: Import speed
+- Added: Option to update order line items in admin orders
+- Added: Support Webhooks to import/update products/orders/customers automatically when new data is available from Shopify store
+- Added: Filter Orders by financial status, fulfillment status
+- Added: Option to set role when importing customers
+
+/**1.0.8.1 - 2019.11.26**/
+- Added: Import smart collections to categories
+
+/**1.0.8 - 2019.11.12**/
+- Added: Filters for importing coupons
+- Added: Filter products to import by vendor
+- Added: Log for "Import by ID" function
+- Added: Support WooCommerce 3.8
+
+/**1.0.7 - 2019.10.17**/
+- Fixed: Function to download error images
+- Fixed: Function to update variation attributes
+- Fixed: Sanitize email when Shopify API returns special character in order's billing email
+- Optimized: Reduce bad request rate
+- Optimized: Reduce error images rate
+- Optimized: Import speed
+- Optimized: UI/UX
+- Added: Option to update billing address and shipping address
+- Added: Option to import and update product slug
+- Added: Option to use global attributes instead of custom attributes so that attributes can be used for WC filters plugin...
+- Added: Cron update Products/Orders
+- Added: Import product from CSV
+- Added: Import coupons settings
+
+/**1.0.6 - 2019.08.10**/
+- Fixed: Error download product gallery if a product has too many images
+- Fixed: Conflict with some plugins or theme that use accordion
+- Added: Update product URL, variations SKU
+- Added: Able to view images that were not downloaded successfully to download again
+
+/**1.0.5 - 2019.07.12**/
+- Fixed: Validate input ids when importing products by ID
+- Fixed: Error matching variation attributes when attribute name is not in English alphabet
+- Updated: Replace "Save & update all" with "Update selected"
+- Added: Update product attributes
+- Added: Shortcut to products and orders import settings
+
+/**1.0.4 - 2019.06.13**/
+- Added: Import product by ID
+- Added: Set request timeout
+- Added: Import product options: products per ajax request, product type, collection ID, published before date, published after date, order by
+- Added: Import order options: orders per ajax request, Import orders created/imported at or before/after date, Import Orders sequence
+- Added: Import customers per ajax request
+- Added: Options to update product images, title, inventory, description, price
+- Added: Options to update order status, order date, order fulfillments
+
+/**1.0.3 - 2019.05.30**/
+- Fixed: Order status, order date
+- Fixed: CURL error timeout
+- Updated: Set Shopify product type as a WooCommerce category
+- Added: Display Shopify order number instead of WooCommerce order number, able to search by Shopify order number
+- Added: Order status mapping option
+
+/**1.0.2 - 2019.05.16**/
+- Fixed: Some sites can not send API correctly
+- Fixed: Search categories: empty categories are excluded
+- Fixed: Assign wrong product to order when product sku, product id or variation id is empty
+
+/**1.0.1 - 2019.05.08**/
+- Updated: Support
+- Updated: Auto get key
